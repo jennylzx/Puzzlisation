@@ -1096,9 +1096,7 @@ export const ShapesSwitcher = ({
           const label = t(`toolBar.${value}`);
           const letter =
             key && capitalizeString(typeof key === "string" ? key : key[0]);
-          const shortcut = letter
-            ? `${letter} ${t("helpDialog.or")} ${numericKey}`
-            : `${numericKey}`;
+          const shortcut = letter || undefined;
           // when in compact styles panel mode (tablet)
           // use a ToolPopover for selection/lasso toggle as well
           if (
@@ -1142,10 +1140,10 @@ export const ShapesSwitcher = ({
               icon={icon}
               checked={activeTool.type === value}
               name="editor-current-shape"
-              title={`${capitalizeString(label)} — ${shortcut}`}
-              keyBindingLabel={numericKey || letter}
+              title={`${capitalizeString(label)}${shortcut ? ` — ${shortcut}` : ""}`}
+              keyBindingLabel={letter || undefined}
               aria-label={capitalizeString(label)}
-              aria-keyshortcuts={shortcut}
+              aria-keyshortcuts={shortcut || undefined}
               data-testid={`toolbar-${value}`}
               onPointerDown={({ pointerType }) => {
                 if (!app.state.penDetected && pointerType === "pen") {
